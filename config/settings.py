@@ -12,56 +12,53 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# Security settings
+# Keep the secret key secret and do not use DEBUG mode in production
 SECRET_KEY = 'django-insecure-j55up563rso96^97bp=gusna=flbp&9*&z65__1v4+o4m6g1xd'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ['aktos-project.onrender.com', 'www.aktos-project.onrender.com', '127.0.0.1']
 
-
-# Application definition
-
+# Installed apps
+# List of apps that are enabled in this Django project
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',  # Django REST framework
+    'django.contrib.admin',  # Admin interface
+    'django.contrib.auth',  # Authentication framework
+    'django.contrib.contenttypes',  # Content types framework
+    'django.contrib.sessions',  # Session framework
+    'django.contrib.messages',  # Messaging framework
+    'django.contrib.staticfiles',  # Static files handling
+    'rest_framework',  # Django REST framework for APIs
     'accounts',  # Custom accounts app
-    
-    
 ]
 
+# Middleware
+# List of middleware components used by the project
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',  # Security enhancements
+    'django.contrib.sessions.middleware.SessionMiddleware',  # Session management
+    'django.middleware.common.CommonMiddleware',  # Common HTTP middleware
+    'django.middleware.csrf.CsrfViewMiddleware',  # CSRF protection
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Authentication middleware
+    'django.contrib.messages.middleware.MessageMiddleware',  # Messaging middleware
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Clickjacking protection
 ]
 
+# URL configuration
+# Root URL configuration module
 ROOT_URLCONF = 'config.urls'
 
+# Templates
+# Configuration for template rendering
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Template backend
+        'DIRS': [],  # Directories to search for templates
+        'APP_DIRS': True,  # Enable app-specific templates
         'OPTIONS': {
-            'context_processors': [
+            'context_processors': [  # Context processors for templates
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -71,57 +68,47 @@ TEMPLATES = [
     },
 ]
 
+# WSGI application
+# Entry point for WSGI-compatible web servers
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# Database configuration
+# Default database settings using SQLite
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # Database engine
+        'NAME': BASE_DIR / 'db.sqlite3',  # Database file path
     }
 }
 
-
 # Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
+# Validators for user passwords
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # Prevent passwords similar to user attributes
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # Enforce minimum password length
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # Prevent common passwords
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # Prevent numeric-only passwords
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
+# Settings for language and timezone
+LANGUAGE_CODE = 'en-us'  # Default language
+TIME_ZONE = 'UTC'  # Default timezone
+USE_I18N = True  # Enable internationalization
+USE_TZ = True  # Enable timezone support
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+# Static files
+# Configuration for serving static files
 STATIC_URL = 'static/'
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
+# Auto field type for primary keys
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
