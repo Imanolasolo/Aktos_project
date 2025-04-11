@@ -65,7 +65,7 @@ class AccountListView(View):
 class UploadCSVView(View):
     def get(self, request):
         # Path to the downloaded CSV file
-        csv_file_path = "f:\\CODECODIX\\aktos_project\\downloaded_file.csv"
+        csv_file_path = "downloaded_file.csv"
 
         try:
             # Read the CSV file
