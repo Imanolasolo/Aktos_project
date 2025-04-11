@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-j55up563rso96^97bp=gusna=flbp&9*&z65__1v4+o4m6g1xd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aktos-project.onrender.com', 'www.aktos-project.onrender.com']
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # Django REST framework
     'accounts',  # Custom accounts app
-    'aktos_project.onrender.com', 'www.aktos_project.onrender.com' # For RENDER deploy
+    
     
 ]
 
