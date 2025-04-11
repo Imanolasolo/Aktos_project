@@ -7,6 +7,8 @@ from django.views import View
 from django.db import transaction
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from accounts.models import CollectionAgency, Client, Consumer, Account
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 class AccountListView(View):
@@ -59,51 +61,22 @@ class AccountListView(View):
             "total_pages": paginator.num_pages,
         })
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class UploadCSVView(View):
-    def post(self, request):
-        # Check if a file is provided
-        csv_file = request.FILES.get('file')
-        if not csv_file:
-            return JsonResponse({"error": "No file provided"}, status=400)
+    def get(self, request):
+        # Path to the downloaded CSV file
+        csv_file_path = "f:\\CODECODIX\\aktos_project\\downloaded_file.csv"
 
-        # Parse the CSV file
         try:
-            csv_data = TextIOWrapper(csv_file.file, encoding='utf-8')
-            reader = csv.DictReader(csv_data)
+            # Read the CSV file
+            with open(csv_file_path, mode="r", encoding="utf-8") as file:
+                reader = csv.DictReader(file)
+                data = [row for row in reader]  # Convert rows to a list of dictionaries
+
+            # Return the content as JSON
+            return JsonResponse({"data": data}, status=200)
+
+        except FileNotFoundError:
+            return JsonResponse({"error": "CSV file not found. Please ensure the file exists."}, status=404)
         except Exception as e:
-            return JsonResponse({"error": f"Invalid CSV file: {str(e)}"}, status=400)
-
-        # Create default agency & client
-        agency, _ = CollectionAgency.objects.get_or_create(name="Default Agency")
-        client, _ = Client.objects.get_or_create(name="Default Client", agency=agency)
-
-        accounts_cache = {}
-
-        # Process the CSV rows
-        with transaction.atomic():  # Ensure atomicity
-            for row in reader:
-                account_id = row['client reference no'].strip()
-                balance = Decimal(row['balance'].strip())
-                status = row['status'].strip().lower()
-                consumer_name = row['consumer name'].strip()
-
-                # Only accept known statuses
-                if status not in ['in_collection', 'collected']:
-                    continue
-
-                consumer, _ = Consumer.objects.get_or_create(full_name=consumer_name)
-
-                if account_id not in accounts_cache:
-                    account = Account.objects.create(
-                        client=client,
-                        balance=balance,
-                        status=status
-                    )
-                    accounts_cache[account_id] = account
-                else:
-                    account = accounts_cache[account_id]
-
-                account.consumers.add(consumer)
-
-        return JsonResponse({"message": "CSV data imported successfully"}, status=201)
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
