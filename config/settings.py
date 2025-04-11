@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # Django REST framework
     'accounts',  # Custom accounts app
+    'aktos-project.onrender.com', 'www.aktos-project.onrender.com' # For RENDER deploy
     
 ]
 
